@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = environment.apiUrl; // use environment variable
 
   constructor(private http: HttpClient) {}
 
@@ -25,9 +26,7 @@ export class ApiService {
 
   searchCars(filter: any, token: string) {
     return this.http.post(`${this.baseUrl}/recommend/search`, filter, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
   }
 }
