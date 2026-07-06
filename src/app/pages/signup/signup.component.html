@@ -1,12 +1,83 @@
-<form (ngSubmit)="onSignup()">
-  <input [(ngModel)]="name" name="name" placeholder="Name" required />
-  <input [(ngModel)]="email" name="email" placeholder="Email" required />
-  <input
-    [(ngModel)]="password"
-    name="password"
-    type="password"
-    placeholder="Password"
-    required
-  />
-  <button type="submit">Signup</button>
-</form>
+<div class="signup-container">
+  <div class="signup-card">
+    <h2>Create Account</h2>
+
+    <p>Join CarVista today.</p>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
+      <div class="form-group">
+        <label>Name</label>
+
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Enter your name"
+        />
+
+        <small
+          *ngIf="
+            signupForm.get('name')?.invalid && signupForm.get('name')?.touched
+          "
+        >
+          Name is required
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="Enter your email"
+        />
+
+        <small
+          *ngIf="
+            signupForm.get('email')?.errors?.['required'] &&
+            signupForm.get('email')?.touched
+          "
+        >
+          Email is required
+        </small>
+
+        <small *ngIf="signupForm.get('email')?.errors?.['email']">
+          Enter a valid email
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Enter your password"
+        />
+
+        <small
+          *ngIf="
+            signupForm.get('password')?.errors?.['required'] &&
+            signupForm.get('password')?.touched
+          "
+        >
+          Password is required
+        </small>
+
+        <small *ngIf="signupForm.get('password')?.errors?.['minlength']">
+          Password must be at least 6 characters
+        </small>
+      </div>
+
+      <button type="submit" [disabled]="signupForm.invalid">
+        Create Account
+      </button>
+    </form>
+
+    <div class="login-link">
+      Already have an account?
+
+      <a routerLink="/login"> Login </a>
+    </div>
+  </div>
+</div>

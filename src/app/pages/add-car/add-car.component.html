@@ -1,26 +1,57 @@
-<form (ngSubmit)="onAddCar()">
-  <input [(ngModel)]="brand" name="brand" placeholder="Brand" required />
-  <input [(ngModel)]="model" name="model" placeholder="Model" required />
-  <input
-    [(ngModel)]="power"
-    name="power"
-    type="number"
-    placeholder="Power"
-    required
-  />
-  <input
-    [(ngModel)]="mileage"
-    name="mileage"
-    type="number"
-    placeholder="Mileage"
-    required
-  />
-  <input
-    [(ngModel)]="price"
-    name="price"
-    type="number"
-    placeholder="Price"
-    required
-  />
-  <button type="submit">Add Car</button>
-</form>
+<div class="container">
+  <div class="card">
+    <h2>Add New Car</h2>
+
+    <form [formGroup]="addCarForm" (ngSubmit)="onAddCar()">
+      <div class="form-group">
+        <label>Brand</label>
+
+        <input type="text" formControlName="brand" placeholder="Enter Brand" />
+
+        <small
+          *ngIf="
+            addCarForm.get('brand')?.invalid && addCarForm.get('brand')?.touched
+          "
+        >
+          Brand is required
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label>Model</label>
+
+        <input type="text" formControlName="model" placeholder="Enter Model" />
+
+        <small
+          *ngIf="
+            addCarForm.get('model')?.invalid && addCarForm.get('model')?.touched
+          "
+        >
+          Model is required
+        </small>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label>Power (BHP)</label>
+
+          <input type="number" formControlName="power" />
+        </div>
+
+        <div class="form-group">
+          <label>Mileage (km/l)</label>
+
+          <input type="number" formControlName="mileage" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Price</label>
+
+        <input type="number" formControlName="price" />
+      </div>
+
+      <button type="submit" [disabled]="addCarForm.invalid">Add Car</button>
+    </form>
+  </div>
+</div>
