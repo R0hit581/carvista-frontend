@@ -1,0 +1,26 @@
+<form (ngSubmit)="onAddCar()">
+  <input [(ngModel)]="brand" name="brand" placeholder="Brand" required />
+  <input [(ngModel)]="model" name="model" placeholder="Model" required />
+  <input
+    [(ngModel)]="power"
+    name="power"
+    type="number"
+    placeholder="Power"
+    required
+  />
+  <input
+    [(ngModel)]="mileage"
+    name="mileage"
+    type="number"
+    placeholder="Mileage"
+    required
+  />
+  <input
+    [(ngModel)]="price"
+    name="price"
+    type="number"
+    placeholder="Price"
+    required
+  />
+  <button type="submit">Add Car</button>
+</form>

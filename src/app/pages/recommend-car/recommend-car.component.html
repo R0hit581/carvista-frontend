@@ -1,0 +1,62 @@
+<div class="recommend-container">
+  <div class="search-card">
+    <h2>🚗 Find Your Perfect Car</h2>
+    <p>Enter your preferences to get personalized recommendations.</p>
+
+    <form (ngSubmit)="onRecommend()">
+      <div class="form-group">
+        <label>Brand</label>
+        <input
+          type="text"
+          [(ngModel)]="brand"
+          name="brand"
+          placeholder="e.g. Tata, Hyundai, Mahindra"
+        />
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+          <label>Minimum Power (BHP)</label>
+          <input
+            type="number"
+            [(ngModel)]="minPower"
+            name="minPower"
+            placeholder="100"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Minimum Mileage (km/l)</label>
+          <input
+            type="number"
+            [(ngModel)]="minMileage"
+            name="minMileage"
+            placeholder="18"
+          />
+        </div>
+      </div>
+
+      <button type="submit">Search Cars</button>
+    </form>
+  </div>
+
+  <div class="results" *ngIf="recommendations.length">
+    <h3>Recommended Cars</h3>
+
+    <div class="car-grid">
+      <div class="car-card" *ngFor="let car of recommendations">
+        <h3>{{ car.brand }} {{ car.model }}</h3>
+
+        <div class="car-info">
+          <p><strong>⚡ Power:</strong> {{ car.power }} BHP</p>
+          <p><strong>⛽ Mileage:</strong> {{ car.mileage }} km/l</p>
+          <p><strong>💰 Price:</strong> ₹{{ car.price | number }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-data" *ngIf="recommendations.length === 0">
+    No recommendations yet. Search above to find your ideal car.
+  </div>
+</div>
