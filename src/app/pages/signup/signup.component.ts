@@ -8,16 +8,18 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../api.service';
+import { LoaderComponent } from '../../shared/loader/loader.component';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, LoaderComponent],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
 export class SignupComponent {
   signupForm: FormGroup;
+  loading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -39,14 +41,17 @@ export class SignupComponent {
       return;
     }
 
+    this.loading = true;
     this.api.signup(this.signupForm.value).subscribe({
       next: () => {
+        this.loading = false;
         alert('Registration successful');
         this.signupForm.reset();
         this.router.navigate(['/login']);
       },
 
       error: (err) => {
+        this.loading = false;
         console.error(err);
 
         alert(err.error?.message || 'Registration failed');

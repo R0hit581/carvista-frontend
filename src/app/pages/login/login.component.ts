@@ -2,17 +2,20 @@ import { Component } from '@angular/core';
 import { ApiService } from '../../api.service';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { LoaderComponent } from '../../shared/loader/loader.component';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterModule],
+  imports: [FormsModule, RouterModule, LoaderComponent, NgIf],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
   email = '';
   password = '';
+  loading = false;
 
   constructor(
     private api: ApiService,
@@ -20,6 +23,7 @@ export class LoginComponent {
   ) {}
 
   onLogin() {
+    this.loading = true;
     this.api
       .login({
         email: this.email,
@@ -27,6 +31,7 @@ export class LoginComponent {
       })
       .subscribe({
         next: (response: any) => {
+          this.loading = false;
           localStorage.setItem('jwt', response.token);
           localStorage.setItem('role', response.role);
           if (response.role === 'ROLE_ADMIN') {
@@ -37,6 +42,7 @@ export class LoginComponent {
           }
         },
         error: (err) => {
+          this.loading = false;
           alert(err.error.message);
         },
       });

@@ -1,5 +1,6 @@
 <div class="login-container">
   <div class="login-card">
+    <app-loader *ngIf="loading"></app-loader>
     <h2>Welcome Back</h2>
     <p class="subtitle">Sign in to your CarVista account</p>
 
@@ -12,6 +13,7 @@
           name="email"
           placeholder="Enter your email"
           required
+          [disabled]="loading"
         />
       </div>
 
@@ -23,10 +25,13 @@
           name="password"
           placeholder="Enter your password"
           required
+          [disabled]="loading"
         />
       </div>
 
-      <button type="submit" class="login-btn">Login</button>
+      <button type="submit" class="login-btn" [disabled]="loading">
+        {{ loading ? "Signing in..." : "Login" }}
+      </button>
     </form>
 
     <p class="signup-text">
