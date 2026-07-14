@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../../api.service';
+import { AuthService } from '../../auth.service';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { LoaderComponent } from '../../shared/loader/loader.component';
@@ -20,6 +21,7 @@ export class LoginComponent {
   constructor(
     private api: ApiService,
     private router: Router,
+    private authService: AuthService,
   ) {}
 
   onLogin() {
@@ -32,8 +34,8 @@ export class LoginComponent {
       .subscribe({
         next: (response: any) => {
           this.loading = false;
-          localStorage.setItem('jwt', response.token);
-          localStorage.setItem('role', response.role);
+          this.authService.setSession(response.token, response.role);
+
           if (response.role === 'ROLE_ADMIN') {
             this.router.navigate(['/add-car']);
           } else {
